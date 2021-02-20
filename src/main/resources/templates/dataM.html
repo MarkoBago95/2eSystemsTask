@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>All data</title>
+	<link rel = "stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  />
+</head>
+<body>
+	<div class="container" align="center">
+		
+		<div>
+			<h1>Data</h1>
+		</div>
+		<div>	
+			<table class="table table-striped table-bordered">
+				<thead class="thead-dark">
+					<tr>
+						<th>Id</th>
+						<th>ICAO</th>
+						<th>METAR</th>
+						<th>Name</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="metar: ${dataM}">
+						<td th:text ="${metar.id}">Id</td>
+						<td th:text ="${metar.icaoM}">ICAO</td>
+						<td th:text ="${metar.metar_value}">METAR</td>
+						<td th:text ="${metar.name}">Name</td>
+					</tr>
+					<tr class="thead-dark">
+						<th>Temperature (C°)</th>
+						<th>Wind speed (Kph)</th>
+						<th>Visibility(meters)</th>
+						<th>Elevation(meters)</th>
+					</tr>
+					<tr th:each="metar: ${dataM}">
+						<td th:text ="${metar.temperature}">Temperature</td>
+						<td th:text ="${metar.wind}">Wind speed</td>
+						<td th:text ="${metar.visibility}">Visibility</td>
+						<td th:text ="${metar.elevation}">Elevation</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<h3><a th:href = "@{/}">Back to Home page</a></h3>
+		<h3><a th:href = "@{/new}">Create new subscription</a></h3>
+		<h3><a th:href = "@{/list}">List of all subscriptions</a></h3>
+	</div>
+	
+</body>
+</html>
