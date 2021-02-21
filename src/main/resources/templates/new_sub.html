@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Create subscription</title>
+	<title>Create new subscription</title>
 	<link rel = "stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"  />
 </head>
 <body>
@@ -18,7 +18,7 @@
 				</tr>
 				<tr>
 					<td>Active:</td>
-					<td><input type="number" th:field="*{active}" required="required"/></td>
+					<td><input type="number" th:field="*{active}" min="0" max="1" required="required"/></td>
 				</tr>
 				
 				<tr>

@@ -9,11 +9,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
 
-import metar.Metar;
 
 @Entity
 @Table(name = "subscriptions")
-@SecondaryTable(name = "metar", pkJoinColumns = @PrimaryKeyJoinColumn(name = "airport_id"))
+@SecondaryTable(name = "metar", pkJoinColumns = @PrimaryKeyJoinColumn(name = "airport_id"))//work with a second table
 public class Subscriptions {
 
 	@Id

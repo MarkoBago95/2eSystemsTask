@@ -35,45 +35,45 @@ public class AppController {
 
 
 	@GetMapping("")
-	public String viewHomePage() {
+	public String viewHomePage() {//default page
 		return "index";
 	}
-	@GetMapping("/list")
+	@GetMapping("/list")//list of all subscriptions
 	public String viewHomePage(Model model) {
-		List<Subscriptions> listSubs = service.listAll();
+		List<Subscriptions> listSubs = service.listAll();//get all subscriptions
 		model.addAttribute("listSubs", listSubs);
 		return "listOfAll";
 	}
-	@RequestMapping("delete/{id}")
+	@RequestMapping("delete/{id}")//delete subscription by passed id
 	public String deleteSubscription(@PathVariable(name="id") int id) {
 		service.deleteSub(id);
 		return "redirect:/list";
 	}
-	@RequestMapping("/new")
+	@RequestMapping("/new")//create new subscription
 	public String createNew(Model model) {
 		Subscriptions sub = new Subscriptions();
 		model.addAttribute("sub", sub);
 		return "new_sub";
 	}
-	@RequestMapping("/edit/{id}")
+	@RequestMapping("/edit/{id}")//edit subscription by passed id
 	public ModelAndView createNew(@PathVariable(name="id") int id) {
 		ModelAndView mav = new ModelAndView("edit_sub");
-		Subscriptions sub = service.get(id);
+		Subscriptions sub = service.get(id);//get data from existing subscription by passed id
 		mav.addObject("sub", sub);
 		return mav;
 	}
 
-	@RequestMapping(value="/save" ,method=RequestMethod.POST)
+	@RequestMapping(value="/save" ,method=RequestMethod.POST)//save in database
 	public String saveSub(@ModelAttribute("sub") Subscriptions sub) {
 		service.save(sub);
 		return "redirect:/list";
 	}
 	@ExceptionHandler({SQLIntegrityConstraintViolationException.class,DataIntegrityViolationException.class,BindException.class,NumberFormatException.class})
     public String handleException() {
-		return "error";
+		return "error";//catch errors
     }
 
-	@GetMapping("/get/{id}")
+	@GetMapping("/get/{id}")//get data for specific airport in real time from external api
 	public String getEmployees(Model model,@PathVariable(name="id") int id) {
 		Subscriptions sub = service.get(id);
 		String icao=sub.getIcao();
@@ -82,20 +82,20 @@ public class AppController {
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		headers.set("X-API-Key", "4ea6bc43309b48f5a088f6ef1c");
+		headers.set("X-API-Key", "4ea6bc43309b48f5a088f6ef1c");//use my api key
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
-		String data = response.getBody();
-		JSONObject jsonObject = new JSONObject(data);
+		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);//call api 
+		String data = response.getBody();//get data in the string
+		JSONObject jsonObject = new JSONObject(data);//make a json object from string
 		JSONArray jsonArray = jsonObject.getJSONArray("data");
 		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject dataObject = jsonArray.getJSONObject(i);
+			JSONObject dataObject = jsonArray.getJSONObject(i);///set values
 			sub.setIcaoM(icao);
 			sub.setId(id);
 			sub.setActive(sub.getActive());
 			sub.setIcao(icao);
 			sub.setMetar_value(dataObject.getString("raw_text"));
-			JSONObject station = dataObject.getJSONObject("station");
+			JSONObject station = dataObject.getJSONObject("station");//get child object value
 			sub.setName(station.getString("name"));
 			JSONObject temp = dataObject.getJSONObject("temperature");
 			sub.setTemperature(temp.getInt("celsius"));
@@ -105,10 +105,10 @@ public class AppController {
 			sub.setVisibility(visibility.getString("meters"));
 			JSONObject elevation = dataObject.getJSONObject("elevation");
 			sub.setElevation(elevation.getInt("meters"));
-			service.save(sub);
+			service.save(sub);//save data to meter table identified by id from table subscriptions
 		}
 		model.addAttribute("dataM", sub);
-		return "dataM";
+		return "dataM";//pass data to html page
 		
 	}
 
