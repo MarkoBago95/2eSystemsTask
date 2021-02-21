@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AppService {
 	@Autowired
-	private AppRepository repo;
+	private AppRepository repo;//use jpa repository functions 
 	
 	public List<Subscriptions> listAll() {//service function to find all subscription
 		return repo.findAll();

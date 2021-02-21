@@ -41,7 +41,7 @@ public class AppController {
 	@GetMapping("/list")//list of all subscriptions
 	public String viewHomePage(Model model) {
 		List<Subscriptions> listSubs = service.listAll();//get all subscriptions
-		model.addAttribute("listSubs", listSubs);
+		model.addAttribute("listSubs", listSubs);//use model to pass collect and show data in html page 
 		return "listOfAll";
 	}
 	@RequestMapping("delete/{id}")//delete subscription by passed id
@@ -105,7 +105,7 @@ public class AppController {
 			sub.setVisibility(visibility.getString("meters"));
 			JSONObject elevation = dataObject.getJSONObject("elevation");
 			sub.setElevation(elevation.getInt("meters"));
-			service.save(sub);//save data to meter table identified by id from table subscriptions
+			service.save(sub);//save data to metar table identified by id from table subscriptions
 		}
 		model.addAttribute("dataM", sub);
 		return "dataM";//pass data to html page

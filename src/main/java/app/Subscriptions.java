@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "subscriptions")
 @SecondaryTable(name = "metar", pkJoinColumns = @PrimaryKeyJoinColumn(name = "airport_id"))//work with a second table
-public class Subscriptions {
+public class Subscriptions {//model class
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
