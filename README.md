@@ -19,7 +19,8 @@ cp metar.xml /var/lib/mysql-files
 
 mysql> LOAD XML
        INFILE "/var/lib/mysql-files/metar.xml" INTO TABLE data.metar
-       ROWS IDENTIFIED BY "<METAR>";
+       ROWS IDENTIFIED BY '<METAR>';
+       SELECT * FROM metar WHERE station_id ='LDZA';
        
-       SELECT * FROM data.metar WHERE 'station_id' = 'LDZA';
+       
 
