@@ -1,0 +1,13 @@
+
+list of linux terminal commands to:
+-get metar data from external sources 'https://www.aviationweather.gov/dataserver/current
+-save data from xml to mysql table
+-get data for specific icao
+
+1.run download.sh sctipt
+
+2.load data in mysql using 
+LOAD XML INFILE "/var/lib/mysql-files/metar.xml" INTO TABLE data.metar ROWS IDENTIFIED BY '<METAR>';
+
+3.run get.sh and type ICAO code you want to get data for;
+
